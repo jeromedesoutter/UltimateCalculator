@@ -8,6 +8,7 @@
 
 package com.minhasKamal.ultimateCalculator;
 
+import com.minhasKamal.ultimateCalculator.calculators.primeNumberHunter.PrimeNumberHunterOperation;
 import com.minhasKamal.ultimateCalculator.calculators.simpleCalculator.SimpleCalculator;
 
 

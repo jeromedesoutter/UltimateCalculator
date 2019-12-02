@@ -66,30 +66,33 @@ public class EquationSovlerOperation {
 			double B3 = Double.parseDouble(b3);
 			double C3 = Double.parseDouble(c3);
 			double D3 = Double.parseDouble(d3);
-			
-			
+
+
+			Double numerator0 = (D1*(B2*C3-C2*B3) + B1*(C2*D3-D2*C3) + C1*(D2*B3-B2*D3));
+			Double numerator1 = (A1*(D2*C3-C2*D3) + D1*(C2*A3-A2*C3) + C1*(A2*D3-D2*A3));
+			Double numerator2 = (A1*(B2*D3-D2*B3) + B1*(D2*A3-A2*D3) + D1*(A2*B3-B2*A3));
 			Double divisor = A1*(B2*C3-C2*B3) + B1*(C2*A3-A2*C3) + C1*(A2*B3-B2*A3);
-			
+
 			if(divisor!=0){
-				xyz[0]= "" + ( (D1*(B2*C3-C2*B3) + B1*(C2*D3-D2*C3) + C1*(D2*B3-B2*D3)) / divisor );
-				xyz[1]= "" + ( (A1*(D2*C3-C2*D3) + D1*(C2*A3-A2*C3) + C1*(A2*D3-D2*A3)) / divisor );
-				xyz[2]= "" + ( (A1*(B2*D3-D2*B3) + B1*(D2*A3-A2*D3) + D1*(A2*B3-B2*A3)) / divisor );
+				xyz[0]= "" + ( numerator0 / divisor );
+				xyz[1]= "" + ( numerator1 / divisor );
+				xyz[2]= "" + ( numerator2 / divisor );
 				
 				//For better understanding ignore double number
 				if((xyz[0].indexOf(".")+4)<xyz[0].length()){
-					double gcd=gcdFinder(D1*(B2*C3-C2*B3) + B1*(C2*D3-D2*C3) + C1*(D2*B3-B2*D3), divisor);
+					double gcd=gcdFinder(numerator0, divisor);
 					
-					xyz[0]="(" + (D1*(B2*C3-C2*B3) + B1*(C2*D3-D2*C3) + C1*(D2*B3-B2*D3))/gcd + ") / (" + divisor/gcd + ")";
+					xyz[0]="(" + numerator0/gcd + ") / (" + divisor/gcd + ")";
 				}
 				if((xyz[1].indexOf(".")+4)<xyz[1].length()){
-					double gcd=gcdFinder(A1*(D2*C3-C2*D3) + D1*(C2*A3-A2*C3) + C1*(A2*D3-D2*A3), divisor);
+					double gcd=gcdFinder(numerator1, divisor);
 					
-					xyz[1]="(" + (A1*(D2*C3-C2*D3) + D1*(C2*A3-A2*C3) + C1*(A2*D3-D2*A3))/gcd + ") / (" + divisor/gcd + ")";
+					xyz[1]="(" + numerator1/gcd + ") / (" + divisor/gcd + ")";
 				}
 				if((xyz[2].indexOf(".")+4)<xyz[2].length()){
-					double gcd=gcdFinder(A1*(B2*D3-D2*B3) + B1*(D2*A3-A2*D3) + D1*(A2*B3-B2*A3), divisor);
+					double gcd=gcdFinder(numerator2, divisor);
 					
-					xyz[2]="(" + (A1*(B2*D3-D2*B3) + B1*(D2*A3-A2*D3) + D1*(A2*B3-B2*A3))/gcd + ") / (" + divisor/gcd + ")";
+					xyz[2]="(" + numerator2/gcd + ") / (" + divisor/gcd + ")";
 				}
 			}else{
 				xyz[0]= "No Answer!";
