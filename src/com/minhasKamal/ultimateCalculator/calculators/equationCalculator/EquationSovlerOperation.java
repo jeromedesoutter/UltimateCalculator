@@ -21,7 +21,7 @@ public class EquationSovlerOperation {
 			double A2 = Double.parseDouble(a2);
 			double B2 = Double.parseDouble(b2);
 			double C2 = Double.parseDouble(c2);
-			
+
 			if((A1*B2-A2*B1)!=0){
 				xy[0]= "" + ( (C1*B2-C2*B1)/(A1*B2-A2*B1) );
 				xy[1]= "" + ( (A1*C2-A2*C1)/(A1*B2-A2*B1) );
@@ -155,7 +155,7 @@ public class EquationSovlerOperation {
 	
 	//solves the equation ax3+bx2+cx=d
 	public String[] AX3BX2CXD(String a, String b, String c, String d){
-		String x[] = new String[3];	//holds resulting values
+		String[] x = new String[3];	//holds resulting values
 		
 		try{
 			double A = Double.parseDouble(a);
@@ -182,8 +182,8 @@ public class EquationSovlerOperation {
 			}
 
 			//finding the other two;
-			if(!x[0].equals(null)){
-				String[] rawX = new String[2];	//x of binary equation
+			if(x[0] != null){
+				String[] rawX;	//x of binary equation
 				
 				String rawA="" + ( Double.parseDouble(a) );
 				String rawB="" + ( Double.parseDouble(b)+(Double.parseDouble(a)*Double.parseDouble(x[0])) );
@@ -234,36 +234,19 @@ public class EquationSovlerOperation {
 	}
 	
 	//takes two number and finds the g.c.d
-	private double gcdFinder(double a, double b){
-		double gcd=1;
-		boolean neg=false;
-		
-		long A=(long)a;
-		long B=(long)b;
-		
-		if(A!=a || B!=b){
-			//do nothing
-		}else{
-			if(A<0 && B<0) neg=true;	//both are negative
-			
-			if(A<0) A=A*(-1);	//make positive
-			if(B<0) B=B*(-1);
-			
-			if(A>B){	//make A smaller
-				A=A+B;
-				B=A-B;
-				A=A-B;
-			}
-			
-			for(long i=1; i<=A; i++){
-				if(A%i==0 && B%i==0)
-					gcd=i;
-			}
-			
-			if(neg) gcd=gcd*(-1);
+	private static double gcdFinder(double a, double b) {
+		long A = (long) a;
+		long B = (long) b;
+
+		if(!(A != a || B != b)) return 1;
+
+		while (B != 0) {
+			Long T = B;
+			B = A % B;
+			A = T;
 		}
-		
-		return gcd;
+
+		return A;
 	}
 }
 
