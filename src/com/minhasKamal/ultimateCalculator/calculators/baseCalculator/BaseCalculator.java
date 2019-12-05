@@ -325,7 +325,7 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 		
 		/*Some extra settings*/
 		jTButtonBase[2].setSelected(true);
-		base=3;
+		base= BaseCalculatorOperation.Base.DECIMAL.value;
 		for(int i=0; i<6; i++){
 			jButtonAlphaNumerical[i].setEnabled(false);
 		}
@@ -358,8 +358,8 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 		if(evt.getActionCommand()=="Bin" || evt.getActionCommand().equals("")){
 			jTButtonBase[0].setSelected(true);
 			
-			jLabelDisplay[1].setText(bcOperation.conversion(base, 1, jLabelDisplay[1].getText()));
-			base=1;
+			jLabelDisplay[1].setText(bcOperation.conversion(base, BaseCalculatorOperation.Base.BINARY.value, jLabelDisplay[1].getText()));
+			base= BaseCalculatorOperation.Base.BINARY.value;
 			
 			for(int i=2; i<10; i++){
 				jButtonNumerical[i].setEnabled(false);
@@ -370,8 +370,8 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 		}else if(evt.getActionCommand()=="Oct" || evt.getActionCommand().equals("")){
 			jTButtonBase[1].setSelected(true);
 
-			jLabelDisplay[1].setText(bcOperation.conversion(base, 2, jLabelDisplay[1].getText()));
-			base=2;
+			jLabelDisplay[1].setText(bcOperation.conversion(base, BaseCalculatorOperation.Base.OCTAL.value, jLabelDisplay[1].getText()));
+			base= BaseCalculatorOperation.Base.OCTAL.value;
 
 			for(int i=2; i<8; i++){
 				jButtonNumerical[i].setEnabled(true);
@@ -385,8 +385,8 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 		}else if(evt.getActionCommand()=="Dec" || evt.getActionCommand().equals("")){
 			jTButtonBase[2].setSelected(true);
 
-			jLabelDisplay[1].setText(bcOperation.conversion(base, 3, jLabelDisplay[1].getText()));
-			base=3;
+			jLabelDisplay[1].setText(bcOperation.conversion(base, BaseCalculatorOperation.Base.DECIMAL.value, jLabelDisplay[1].getText()));
+			base= BaseCalculatorOperation.Base.DECIMAL.value;
 
 			for(int i=2; i<10; i++){
 				jButtonNumerical[i].setEnabled(true);
@@ -397,8 +397,8 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 		}else if(evt.getActionCommand()=="Hex" || evt.getActionCommand().equals("")){
 			jTButtonBase[3].setSelected(true);
 
-			jLabelDisplay[1].setText(bcOperation.conversion(base, 4, jLabelDisplay[1].getText()));
-			base=4;
+			jLabelDisplay[1].setText(bcOperation.conversion(base, BaseCalculatorOperation.Base.HEXADECIMAL.value, jLabelDisplay[1].getText()));
+			base= BaseCalculatorOperation.Base.HEXADECIMAL.value;
 
 			for(int i=2; i<10; i++){
 				jButtonNumerical[i].setEnabled(true);
@@ -412,19 +412,19 @@ public class BaseCalculator extends UltimateCalculatorFrame{
 	
 	//Numerical Buttons
 	private void jButtonNumericalActionPerformed(ActionEvent evt){
-		if(base==1 && number.length()<19){
+		if(base== BaseCalculatorOperation.Base.BINARY.value && number.length()<19){
 			if(!(number.contains(".") && evt.getActionCommand().equals("."))){
 				number=number+evt.getActionCommand();
 			}
-		}else if(base==2 && number.length()<16){
+		}else if(base== BaseCalculatorOperation.Base.OCTAL.value && number.length()<16){
 			if(!(number.contains(".") && evt.getActionCommand().equals("."))){
 				number=number+evt.getActionCommand();
 			}
-		}else if(base==3 && number.length()<15){
+		}else if(base== BaseCalculatorOperation.Base.DECIMAL.value && number.length()<15){
 			if(!(number.contains(".") && evt.getActionCommand().equals("."))){
 				number=number+evt.getActionCommand();
 			}
-		}else if(base==4 && number.length()<12){
+		}else if(base== BaseCalculatorOperation.Base.HEXADECIMAL.value && number.length()<12){
 			if(!(number.contains(".") && evt.getActionCommand().equals("."))){
 				number=number+evt.getActionCommand();
 			}
