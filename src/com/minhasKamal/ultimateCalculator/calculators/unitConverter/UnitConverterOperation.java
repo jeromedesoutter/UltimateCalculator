@@ -3,7 +3,7 @@ package com.minhasKamal.ultimateCalculator.calculators.unitConverter;
 import java.util.function.Function;
 
 class UnitConverterOperation {
-    private interface UnitConverter<T>{
+    public interface UnitConverter<T>{
         double convert(T from, T to, double input);
     }
 

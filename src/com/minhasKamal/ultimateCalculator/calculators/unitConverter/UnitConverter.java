@@ -46,6 +46,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 
 	//other variables
     private int SelectedIndex;
+    private UnitConverterOperation.UnitConverter[] valuesEnum;
     private int from, to;
     private boolean buttonPressed;
 	// End of Variable Declaration 																#_______D_______#
@@ -53,6 +54,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	/***##Constructor##***/
 	public UnitConverter() {
 		SelectedIndex=1;
+		valuesEnum = UnitConverterOperation.Length.values();
 		from=1;
 		to=1;
 		buttonPressed=false;
@@ -135,6 +137,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		SelectedIndex=jCBoxTypeSelection.getSelectedIndex()+1;
 		
 		if(SelectedIndex==1){
+			valuesEnum = UnitConverterOperation.Length.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Angstrom", "Nanometer", "Micron", 
 					"Millimeter", "Centimeter", "Meter", "KiloMeter", "Inch", "Feet", "Yard", "Nautical Mile", "Mile",
@@ -144,6 +147,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Rod"}));
 			
 		}else if(SelectedIndex==2){
+			valuesEnum = UnitConverterOperation.Weight.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Milligram", "Gram", "Kilogram",
 					"Tonne", "Ounce", "Pound", "Carat"}));
@@ -151,6 +155,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Tonne", "Ounce", "Pound", "Carat"}));
 			
 		}else if(SelectedIndex==3){
+			valuesEnum = UnitConverterOperation.Temperature.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Celsius", "Fahrenheit", "Kelvin"}));
 			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[] {"Celsius", "Fahrenheit", "Kelvin"}));
@@ -165,6 +170,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Bigha", "Satak", "Acre"}));
 			
 		}else if(SelectedIndex==5){
+			valuesEnum = UnitConverterOperation.Volume.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Cubic Centimeter", "Cubic Meter",
 					"Cubic Inch", "Cubic Feet", "Cubic Yard", "Liter", "Gallon(UK)", "Gallon(US)"}));
@@ -172,6 +178,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Cubic Inch", "Cubic Feet", "Cubic Yard", "Liter", "Gallon(UK)", "Gallon(US)"}));
 			
 		}else if(SelectedIndex==6){
+			valuesEnum = UnitConverterOperation.Time.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Nanosecond", "Millisecond", 
 					"Second", "Minute", "Hour", "Day" , "Week"}));
@@ -179,6 +186,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Second", "Minute", "Hour", "Day" , "Week"}));
 			
 		}else if(SelectedIndex==7){
+			valuesEnum = UnitConverterOperation.Energy.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Joule", "Kilojoule",
 					"Calorie", "Kilocalorie", "Electron-Volts", "Foot-Pound"}));
@@ -187,6 +195,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 
 
 		}else if(SelectedIndex==8){
+			valuesEnum = UnitConverterOperation.Power.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Watt", "Kilowatt",
 					"Horsepower" }));
@@ -217,26 +226,8 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	private void jButtonConvertActionPerformed(){
 		try{
 			double input=Double.parseDouble(jTFieldIO[0].getText());
-			double output=0.0;
-			
-			if(SelectedIndex==1){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Length.values()[from-1], UnitConverterOperation.Length.values()[to-1], input);
-			}else if(SelectedIndex==2){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Weight.values()[from-1], UnitConverterOperation.Weight.values()[to-1], input);
-			}else if(SelectedIndex==3){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Temperature.values()[from-1], UnitConverterOperation.Temperature.values()[to-1], input);
-			}else if(SelectedIndex==4){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Area.values()[from-1], UnitConverterOperation.Area.values()[to-1], input);
-			}else if(SelectedIndex==5){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Volume.values()[from-1], UnitConverterOperation.Volume.values() [to-1], input);
-			}else if(SelectedIndex==6){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Time.values()[from-1], UnitConverterOperation.Time.values()[to-1], input);
-			}else if(SelectedIndex==7){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Energy.values()[from-1],UnitConverterOperation.Energy.values()[to-1], input);
-			}else if(SelectedIndex==8){
-				output = UnitConverterOperation.Convert(UnitConverterOperation.Power.values()[from-1],UnitConverterOperation.Power.values()[to-1], input);
-			}
-			
+			double output=UnitConverterOperation.Convert(valuesEnum[from-1], valuesEnum[to-1], input);
+
 			jTFieldIO[1].setText(output+"");
 		}catch(NumberFormatException e){
 			if(buttonPressed) new Message("Math Error!\n   Please input correctly.", 420);
