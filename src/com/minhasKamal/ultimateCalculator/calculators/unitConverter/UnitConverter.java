@@ -9,6 +9,7 @@ package com.minhasKamal.ultimateCalculator.calculators.unitConverter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -72,7 +73,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		super.jCBItemMode[4].setSelected(true);
 	}
 
-	
+
 	/**
 	 * Method for Initializing all the GUI variables and placing them all to specific space on 
 	 * the frame. It also specifies criteria of the main frame.
@@ -215,9 +216,10 @@ public class UnitConverter extends UltimateCalculatorFrame{
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Joule", "Kilojoule",
 					"Calorie", "Kilocalorie", "Electron-Volts", "Foot-Pound"}));
-			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[] {"Joule", "Kilojoule",
+			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[]{"Joule", "Kilojoule",
 					"Calorie", "Kilocalorie", "Electron-Volts", "Foot-Pound"}));
-			
+
+
 		}else if(SelectedIndex==8){
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Watt", "Kilowatt",
@@ -252,21 +254,22 @@ public class UnitConverter extends UltimateCalculatorFrame{
 			double output=0.0;
 			
 			if(SelectedIndex==1){
-				output = unitConvOperLength.Length(from, to, input);
+				output = unitConvOperLength.Length(UnitConverterOperationLength.Length.values()[from-1], UnitConverterOperationLength.Length.values()[to-1], input);
 			}else if(SelectedIndex==2){
-				output = unitConvOperWeight.Weight(from, to, input);
+				Arrays.asList(UnitConverterOperationWeight.Weight.values()).stream().map(a->a.name()).forEach(System.out::println);
+				output = unitConvOperWeight.Weight(UnitConverterOperationWeight.Weight.values()[from-1], UnitConverterOperationWeight.Weight.values()[to-1], input);
 			}else if(SelectedIndex==3){
-				output = unitConvOperTemperature.Temperature(from, to, input);
+				output = unitConvOperTemperature.Temperature(UnitConverterOperationTemperature.Temperature.values()[from-1], UnitConverterOperationTemperature.Temperature.values()[to-1], input);
 			}else if(SelectedIndex==4){
-				output = unitConvOperArea.Area(from, to, input);
+				output = unitConvOperArea.Area(UnitConverterOperationArea.Area.values()[from-1], UnitConverterOperationArea.Area.values()[to-1], input);
 			}else if(SelectedIndex==5){
-				output = unitConvOperVolume.Volume(from, to, input);
+				output = unitConvOperVolume.Volume(UnitConverterOperationVolume.Volume.values()[from-1], UnitConverterOperationVolume.Volume.values() [to-1], input);
 			}else if(SelectedIndex==6){
-				output = unitConvOperTime.Time(from, to, input);
+				output = unitConvOperTime.Time(UnitConverterOperationTime.Time.values()[from-1], UnitConverterOperationTime.Time.values()[to-1], input);
 			}else if(SelectedIndex==7){
-				output = unitConvOperEnergy.Energy(from, to, input);
+				output = unitConvOperEnergy.Energy(UnitConverterOperationEnergy.Energy.values()[from-1],UnitConverterOperationEnergy.Energy.values()[to-1], input);
 			}else if(SelectedIndex==8){
-				output = unitConvOperPower.Power(from, to, input);
+				output = unitConvOperPower.Power(UnitConverterOperationPower.Power.values()[from-1], UnitConverterOperationPower.Power.values()[to-1], input);
 			}
 			
 			jTFieldIO[1].setText(output+"");
