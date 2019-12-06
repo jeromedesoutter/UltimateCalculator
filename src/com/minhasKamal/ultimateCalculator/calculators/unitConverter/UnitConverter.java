@@ -1,7 +1,7 @@
 /****************************************************************************************************************
 * Developer: Minhas Kamal(BSSE-0509, IIT, DU)																	*
 * Date: 04-Jan-2014																								*
-* Modified: 01-Jan-2015																								*
+* Modified: 01-Jan-2015																							*
 ****************************************************************************************************************/
 
 package com.minhasKamal.ultimateCalculator.calculators.unitConverter;
@@ -9,6 +9,7 @@ package com.minhasKamal.ultimateCalculator.calculators.unitConverter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.AbstractAction;
@@ -32,19 +33,7 @@ import com.minhasKamal.ultimateCalculator.utils.fileIO.FileIO;
  * @author Minhas Kamal
  */
 public class UnitConverter extends UltimateCalculatorFrame{
-	// GUI Declaration
-	private UnitConverterGui unitConvgui;
-	
-	//operation object
-	private UnitConverterOperationLength unitConvOperLength;
-	private UnitConverterOperationWeight unitConvOperWeight;
-	private UnitConverterOperationTemperature unitConvOperTemperature;
-	private UnitConverterOperationArea unitConvOperArea;
-	private UnitConverterOperationVolume unitConvOperVolume;
-	private UnitConverterOperationTime unitConvOperTime;
-	private UnitConverterOperationEnergy unitConvOperEnergy;
-	private UnitConverterOperationPower unitConvOperPower;
-	
+
 	//**
 	// Variable Declaration 																	#*******D*******#
 	//**
@@ -54,9 +43,8 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	private JComboBox[] jComboBoxType;
  
     private JTextField[] jTFieldIO;
-    private JButton jButtonConvert;
-    
-    //other variables
+
+	//other variables
     private int SelectedIndex;
     private int from, to;
     private boolean buttonPressed;
@@ -82,18 +70,9 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	@SuppressWarnings({ "serial" })
 	private void initialComponent() {
 		// GUI Initialization
-		unitConvgui = new UnitConverterGui();
-		
-		//operation object
-		unitConvOperLength = new UnitConverterOperationLength();
-		unitConvOperWeight = new UnitConverterOperationWeight();
-		unitConvOperTemperature = new UnitConverterOperationTemperature();
-		unitConvOperArea = new UnitConverterOperationArea();
-		unitConvOperVolume = new UnitConverterOperationVolume();
-		unitConvOperTime = new UnitConverterOperationTime();
-		unitConvOperEnergy = new UnitConverterOperationEnergy();
-		unitConvOperPower = new UnitConverterOperationPower();
-		
+		// GUI Declaration
+		UnitConverterGui unitConvgui = new UnitConverterGui();
+
 		//instruction
 		try {
 			super.instruction = FileIO.readWholeFile(getClass().getResourceAsStream("/res/txts/" +
@@ -109,37 +88,23 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		jComboBoxType = unitConvgui.jComboBoxType; 
 		
 		jTFieldIO = unitConvgui.jTFieldIO;
-		jButtonConvert = unitConvgui.jButtonConvert;
+		JButton jButtonConvert = unitConvgui.jButtonConvert;
 		// End of Assignation																	#_______A_______#
 
 		//**
 		// Adding Action Events & Other Attributes												#*******AA*******#
 		//**
-		jCBoxTypeSelection.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jCBoxTypeSelectionActionPerformed(evt);
-            }
-        });
+		jCBoxTypeSelection.addActionListener(this::jCBoxTypeSelectionActionPerformed);
 		
-		jComboBoxType[0].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jComboBoxTypeFromActionPerformed(evt);
-            }
-        });
+		jComboBoxType[0].addActionListener(this::jComboBoxTypeFromActionPerformed);
 		
-		jComboBoxType[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jComboBoxTypeToActionPerformed(evt);
-            }
-        });
+		jComboBoxType[1].addActionListener(this::jComboBoxTypeToActionPerformed);
 		
-		jButtonConvert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	buttonPressed=true;
-            	jButtonConvertActionPerformed();
-            	buttonPressed=false;
-            }
-        });
+		jButtonConvert.addActionListener(evt -> {
+			buttonPressed=true;
+			jButtonConvertActionPerformed();
+			buttonPressed=false;
+		});
 		jButtonConvert.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
 	    	put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "ENTER_pressed");
 		jButtonConvert.getActionMap().put("ENTER_pressed", new AbstractAction() {
@@ -255,22 +220,21 @@ public class UnitConverter extends UltimateCalculatorFrame{
 			double output=0.0;
 			
 			if(SelectedIndex==1){
-				output = unitConvOperLength.Length(UnitConverterOperationLength.Length.values()[from-1], UnitConverterOperationLength.Length.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Length.values()[from-1], UnitConverterOperation.Length.values()[to-1], input);
 			}else if(SelectedIndex==2){
-				Arrays.asList(UnitConverterOperationWeight.Weight.values()).stream().map(a->a.name()).forEach(System.out::println);
-				output = unitConvOperWeight.Weight(UnitConverterOperationWeight.Weight.values()[from-1], UnitConverterOperationWeight.Weight.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Weight.values()[from-1], UnitConverterOperation.Weight.values()[to-1], input);
 			}else if(SelectedIndex==3){
-				output = unitConvOperTemperature.Temperature(UnitConverterOperationTemperature.Temperature.values()[from-1], UnitConverterOperationTemperature.Temperature.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Temperature.values()[from-1], UnitConverterOperation.Temperature.values()[to-1], input);
 			}else if(SelectedIndex==4){
-				output = unitConvOperArea.Area(UnitConverterOperationArea.Area.values()[from-1], UnitConverterOperationArea.Area.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Area.values()[from-1], UnitConverterOperation.Area.values()[to-1], input);
 			}else if(SelectedIndex==5){
-				output = unitConvOperVolume.Volume(UnitConverterOperationVolume.Volume.values()[from-1], UnitConverterOperationVolume.Volume.values() [to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Volume.values()[from-1], UnitConverterOperation.Volume.values() [to-1], input);
 			}else if(SelectedIndex==6){
-				output = unitConvOperTime.Time(UnitConverterOperationTime.Time.values()[from-1], UnitConverterOperationTime.Time.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Time.values()[from-1], UnitConverterOperation.Time.values()[to-1], input);
 			}else if(SelectedIndex==7){
-				output = unitConvOperEnergy.Energy(UnitConverterOperationEnergy.Energy.values()[from-1],UnitConverterOperationEnergy.Energy.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Energy.values()[from-1],UnitConverterOperation.Energy.values()[to-1], input);
 			}else if(SelectedIndex==8){
-				output = unitConvOperPower.Power(UnitConverterOperationPower.Power.values()[from-1], UnitConverterOperationPower.Power.values()[to-1], input);
+				output = UnitConverterOperation.Convert(UnitConverterOperation.Power.values()[from-1],UnitConverterOperation.Power.values()[to-1], input);
 			}
 			
 			jTFieldIO[1].setText(output+"");
@@ -279,23 +243,9 @@ public class UnitConverter extends UltimateCalculatorFrame{
 			else jTFieldIO[1].setText("");
 		}
 	}
-	// End of Action Events 																	#_______AE_______#
-
-	//**
-	// Auxiliary Methods 																		#*******AM*******#
-	//**
-
-	// End of Auxiliary Methods 																#_______AM_______#
-	
-	//**
-	// Unimplemented Methods 																	#*******UM*******#
-	//**
-	
-	// End of Unimplemented Methods 															#_______UM_______#
-	
 	
 	/********* Main Method *********/
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");

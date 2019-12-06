@@ -36,14 +36,13 @@ public class UnitConverterGui extends JLabel {
 	JComboBox jCBoxTypeSelection;
 	@SuppressWarnings("rawtypes")
 	JComboBox[] jComboBoxType;
- 
-    JLabel[] jlabelIdentifier;
-    JTextField[] jTFieldIO;
+
+	JTextField[] jTFieldIO;
     JButton jButtonConvert;
 	// End of Variable Declaration 																#_______D_______#
 
 	/***##Constructor##***/
-	public UnitConverterGui() {
+	UnitConverterGui() {
 
 		initialComponent();
 	}
@@ -58,7 +57,7 @@ public class UnitConverterGui extends JLabel {
 		//**
 		// Initialization 																		#*******I*******#
 		//**
-		jlabelIdentifier = new JLabel[2];
+		JLabel[] jlabelIdentifier = new JLabel[2];
 		jCBoxTypeSelection = new JComboBox(); 
 		jComboBoxType = new JComboBox[2]; 
 		
@@ -72,7 +71,7 @@ public class UnitConverterGui extends JLabel {
 		//Main combo box
 		jCBoxTypeSelection.setBounds(10, 10, 325, 35);
 		jCBoxTypeSelection.setBackground(new Color(154, 152, 151));
-		jCBoxTypeSelection.setFont(new Font("Cambria", 0, 17));
+		jCBoxTypeSelection.setFont(new Font("Cambria", Font.PLAIN, 17));
 		jCBoxTypeSelection.setModel(new DefaultComboBoxModel(new String[]{"  Length", "  Weight", "  Temperature", 
 				"  Area", "  Volume", "  Time", "  Energy", "  Power"}));
 
@@ -81,7 +80,7 @@ public class UnitConverterGui extends JLabel {
 			//Identification label
 			jlabelIdentifier[i]=new JLabel();
 			jlabelIdentifier[i].setBounds(18, 135+i*120, 40, 20);
-			jlabelIdentifier[i].setFont(new Font("Vrinda", 1, 17));
+			jlabelIdentifier[i].setFont(new Font("Vrinda", Font.BOLD, 17));
 			
 			//combo boxes
 			jComboBoxType[i]=new JComboBox();
@@ -94,7 +93,7 @@ public class UnitConverterGui extends JLabel {
 			//text fields
 			jTFieldIO[i]=new JTextField();
 			jTFieldIO[i].setBounds(155, 160+i*120, 180, 30);
-			jTFieldIO[i].setFont(new Font("Calibri", 0, 16));
+			jTFieldIO[i].setFont(new Font("Calibri", Font.PLAIN, 16));
 			jTFieldIO[i].setBorder(new SoftBevelBorder(BevelBorder.LOWERED));
 //			jTFieldIO[i].setBackground(new Color(174, 172, 171));
 		}
@@ -132,7 +131,7 @@ public class UnitConverterGui extends JLabel {
 	}
 
 	/********* Main Method *********/
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
