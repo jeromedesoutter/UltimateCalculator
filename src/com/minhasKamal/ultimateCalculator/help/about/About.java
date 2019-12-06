@@ -10,6 +10,7 @@ package com.minhasKamal.ultimateCalculator.help.about;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.minhasKamal.ultimateCalculator.utils.fileIO.FileIO;
 
@@ -65,7 +67,7 @@ public class About{
 		
 		try {
 			info = FileIO.readWholeFile(getClass().getResourceAsStream("/res/txts/About.txt"));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			info = "EMPTY";
 		}
 		// End of Assignation																	#_______A_______#
@@ -117,7 +119,7 @@ public class About{
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("com.alee.laf.WebLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

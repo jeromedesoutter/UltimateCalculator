@@ -132,7 +132,7 @@ public class MatrixCalculator extends UltimateCalculatorFrame{
     	/* Set the NIMBUS look and feel */
     	try {
 			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");					
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			//do nothing if operation unsuccessful
 		}
 

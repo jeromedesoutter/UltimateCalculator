@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -40,9 +41,10 @@ public class FileIO {
 	 * files inside jar.
 	 * @param filePath input file path
 	 * @return full information of the file
+	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static String readWholeFile(InputStream inputStream) throws Exception{
+	public static String readWholeFile(InputStream inputStream) throws IOException {
 		String string = "";	//for temporary data store
 		String Information = "";	//#contains the full file 
 		
@@ -65,9 +67,10 @@ public class FileIO {
 	 * If file name already exists over-writes it, else creates new file. 
 	 * @param FileName full file path
 	 * @param Information information to be written
+	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static void writeWholeFile(String FileName, String Information) throws Exception{
+	public static void writeWholeFile(String FileName, String Information) throws IOException{
 		
 		BufferedWriter mainBW = new BufferedWriter(new FileWriter(FileName));
 		mainBW.write(Information);

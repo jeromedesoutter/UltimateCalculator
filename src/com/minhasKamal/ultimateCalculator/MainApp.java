@@ -5,10 +5,10 @@
  * 	I am working real hard to make this complex system.
 **/
 
-
 package com.minhasKamal.ultimateCalculator;
 
-import com.minhasKamal.ultimateCalculator.calculators.primeNumberHunter.PrimeNumberHunterOperation;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import com.minhasKamal.ultimateCalculator.calculators.simpleCalculator.SimpleCalculator;
 
 
@@ -22,7 +22,7 @@ public class MainApp {
 			//javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			//javax.swing.UIManager.setLookAndFeel("com.alee.laf.WebLookAndFeel");
 			
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
 			//do nothing
 		}
 		

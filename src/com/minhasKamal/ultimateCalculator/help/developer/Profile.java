@@ -8,10 +8,13 @@
 
 package com.minhasKamal.ultimateCalculator.help.developer;
 
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.minhasKamal.ultimateCalculator.utils.fileIO.FileIO;
 
@@ -91,7 +94,7 @@ public class Profile implements Runnable{
         
         try {
         	developerInfo = FileIO.readWholeFile(getClass().getResourceAsStream("/res/txts/Developer.txt"));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			developerInfo = "EMPTY";
 		}
 		// End of Assignation																	#_______A_______#
@@ -152,7 +155,7 @@ public class Profile implements Runnable{
 						break;
 					}
 				}
-			}catch(Exception e) {
+			}catch(InterruptedException e) {
 				//do nothing
 			}
 			
@@ -169,7 +172,7 @@ public class Profile implements Runnable{
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 
