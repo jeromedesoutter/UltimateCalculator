@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 /**
@@ -147,7 +148,7 @@ public class ProfileGui extends JFrame {
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

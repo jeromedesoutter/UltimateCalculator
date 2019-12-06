@@ -2,9 +2,9 @@
  * Developers: Minhas Kamal(BSSE-0509)
  * Date: 13-Dec-2013
 **/
-
 package com.minhasKamal.ultimateCalculator.calculators.equationCalculator;
 
+ 
 import com.minhasKamal.ultimateCalculator.notifications.message.Message;
 
 
@@ -21,7 +21,7 @@ public class EquationSovlerOperation {
 			double A2 = Double.parseDouble(a2);
 			double B2 = Double.parseDouble(b2);
 			double C2 = Double.parseDouble(c2);
-
+			
 			if((A1*B2-A2*B1)!=0){
 				xy[0]= "" + ( (C1*B2-C2*B1)/(A1*B2-A2*B1) );
 				xy[1]= "" + ( (A1*C2-A2*C1)/(A1*B2-A2*B1) );
@@ -41,7 +41,7 @@ public class EquationSovlerOperation {
 				xy[0]= "No Answer!";
 				xy[1]= "No Answer!";
 			}
-		}catch(Exception e){
+		}catch(NumberFormatException e){
 			new Message("Wrong Input! \n   Numbers only!", 420);
 		}
 		
@@ -146,7 +146,7 @@ public class EquationSovlerOperation {
 			}
 			
 			
-		}catch(Exception e){
+		}catch(NumberFormatException e){
 			new Message("Wrong Input! \n   Numbers only!", 420);
 		}
 		
@@ -203,10 +203,7 @@ public class EquationSovlerOperation {
 				if(x[n]==null) x[n]="Does not have a real solution!";
 			}
 		}
-		
-		
-		
-		
+	
 		return x;
 	}
 	

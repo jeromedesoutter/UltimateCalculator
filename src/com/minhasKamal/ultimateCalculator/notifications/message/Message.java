@@ -148,7 +148,7 @@ public class Message extends JDialog {
 		/*// Set the Web look and feel //*/
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

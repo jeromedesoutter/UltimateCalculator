@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 /**
@@ -331,7 +332,7 @@ public class EquationCalculatorGui extends JTabbedPane{
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

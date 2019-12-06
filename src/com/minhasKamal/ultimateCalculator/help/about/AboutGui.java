@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
@@ -108,7 +109,7 @@ public class AboutGui extends JFrame {
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.alee.laf.WebLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

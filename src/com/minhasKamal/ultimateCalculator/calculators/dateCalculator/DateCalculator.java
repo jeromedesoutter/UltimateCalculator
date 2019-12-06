@@ -9,6 +9,7 @@ package com.minhasKamal.ultimateCalculator.calculators.dateCalculator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.AbstractAction;
@@ -17,6 +18,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.minhasKamal.ultimateCalculator.mainFrame.UltimateCalculatorFrame;
 import com.minhasKamal.ultimateCalculator.notifications.message.Message;
@@ -69,7 +71,7 @@ public class DateCalculator extends UltimateCalculatorFrame{
 		try {
 			super.instruction = FileIO.readWholeFile(getClass().getResourceAsStream("/res/txts/" +
 					"DateCalculatorInstruction.txt"));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			super.instruction = "EMPTY";
 		}
 				
@@ -128,19 +130,18 @@ public class DateCalculator extends UltimateCalculatorFrame{
 	private void jButtonCalculateActionPerformed(ActionEvent evt){
     	int day1, month1, year1, day2, month2, year2;
     	String difference="";
-    	
-    	try{
-	    	day1=Integer.parseInt(jTFieldDay[0].getText());
-	    	month1=Integer.parseInt(jTFieldMonth[0].getText());
-	    	year1=Integer.parseInt(jTFieldYear[0].getText());
-	    	day2=Integer.parseInt(jTFieldDay[1].getText());
-	    	month2=Integer.parseInt(jTFieldMonth[1].getText());
-	    	year2=Integer.parseInt(jTFieldYear[1].getText());
-	    	
-	    	difference = dcOperation.Date(day1, month1, year1, day2, month2, year2);
-    	}catch(Exception e){
-    		new Message("Wrong Input! \nUse numbers only.", 420);
+    	try {
+    	day1=Integer.parseInt(jTFieldDay[0].getText());
+		month1=Integer.parseInt(jTFieldMonth[0].getText());
+		year1=Integer.parseInt(jTFieldYear[0].getText());
+		day2=Integer.parseInt(jTFieldDay[1].getText());
+		month2=Integer.parseInt(jTFieldMonth[1].getText());
+		year2=Integer.parseInt(jTFieldYear[1].getText());
+		difference = dcOperation.Date(day1, month1, year1, day2, month2, year2);
+    	}catch(NumberFormatException e) {
+    		new Message("Wrong Input!\nOne field may be null.", 420);
     	}
+		
     	
     	jTFieldOutput.setText(difference);
     }
@@ -164,7 +165,7 @@ public class DateCalculator extends UltimateCalculatorFrame{
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 

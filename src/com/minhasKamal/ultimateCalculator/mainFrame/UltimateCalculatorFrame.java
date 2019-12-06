@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.minhasKamal.ultimateCalculator.calculators.advancedCalculator.AdvancedCalculator;
 import com.minhasKamal.ultimateCalculator.calculators.baseCalculator.BaseCalculator;
@@ -157,7 +158,7 @@ public class UltimateCalculatorFrame{
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception ex) {
+		} catch (ClassNotFoundException| InstantiationException| IllegalAccessException| UnsupportedLookAndFeelException ex) {
 			// do nothing if operation is unsuccessful
 		}
 
