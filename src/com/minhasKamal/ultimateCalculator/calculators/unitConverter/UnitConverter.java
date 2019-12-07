@@ -1,7 +1,7 @@
 /****************************************************************************************************************
 * Developer: Minhas Kamal(BSSE-0509, IIT, DU)																	*
 * Date: 04-Jan-2014																								*
-* Modified: 01-Jan-2015																								*
+* Modified: 01-Jan-2015																							*
 ****************************************************************************************************************/
 
 package com.minhasKamal.ultimateCalculator.calculators.unitConverter;
@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -32,19 +33,7 @@ import com.minhasKamal.ultimateCalculator.utils.fileIO.FileIO;
  * @author Minhas Kamal
  */
 public class UnitConverter extends UltimateCalculatorFrame{
-	// GUI Declaration
-	private UnitConverterGui unitConvgui;
-	
-	//operation object
-	private UnitConverterOperationLength unitConvOperLength;
-	private UnitConverterOperationWeight unitConvOperWeight;
-	private UnitConverterOperationTemperature unitConvOperTemperature;
-	private UnitConverterOperationArea unitConvOperArea;
-	private UnitConverterOperationVolume unitConvOperVolume;
-	private UnitConverterOperationTime unitConvOperTime;
-	private UnitConverterOperationEnergy unitConvOperEnergy;
-	private UnitConverterOperationPower unitConvOperPower;
-	
+
 	//**
 	// Variable Declaration 																	#*******D*******#
 	//**
@@ -54,10 +43,10 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	private JComboBox[] jComboBoxType;
  
     private JTextField[] jTFieldIO;
-    private JButton jButtonConvert;
-    
-    //other variables
+
+	//other variables
     private int SelectedIndex;
+    private UnitConverterOperation.UnitConverter[] valuesEnum;
     private int from, to;
     private boolean buttonPressed;
 	// End of Variable Declaration 																#_______D_______#
@@ -65,6 +54,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	/***##Constructor##***/
 	public UnitConverter() {
 		SelectedIndex=1;
+		valuesEnum = UnitConverterOperation.Length.values();
 		from=1;
 		to=1;
 		buttonPressed=false;
@@ -74,7 +64,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		super.jCBItemMode[4].setSelected(true);
 	}
 
-	
+
 	/**
 	 * Method for Initializing all the GUI variables and placing them all to specific space on 
 	 * the frame. It also specifies criteria of the main frame.
@@ -82,18 +72,9 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	@SuppressWarnings({ "serial" })
 	private void initialComponent() {
 		// GUI Initialization
-		unitConvgui = new UnitConverterGui();
-		
-		//operation object
-		unitConvOperLength = new UnitConverterOperationLength();
-		unitConvOperWeight = new UnitConverterOperationWeight();
-		unitConvOperTemperature = new UnitConverterOperationTemperature();
-		unitConvOperArea = new UnitConverterOperationArea();
-		unitConvOperVolume = new UnitConverterOperationVolume();
-		unitConvOperTime = new UnitConverterOperationTime();
-		unitConvOperEnergy = new UnitConverterOperationEnergy();
-		unitConvOperPower = new UnitConverterOperationPower();
-		
+		// GUI Declaration
+		UnitConverterGui unitConvgui = new UnitConverterGui();
+
 		//instruction
 		try {
 			super.instruction = FileIO.readWholeFile(getClass().getResourceAsStream("/res/txts/" +
@@ -109,37 +90,23 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		jComboBoxType = unitConvgui.jComboBoxType; 
 		
 		jTFieldIO = unitConvgui.jTFieldIO;
-		jButtonConvert = unitConvgui.jButtonConvert;
+		JButton jButtonConvert = unitConvgui.jButtonConvert;
 		// End of Assignation																	#_______A_______#
 
 		//**
 		// Adding Action Events & Other Attributes												#*******AA*******#
 		//**
-		jCBoxTypeSelection.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jCBoxTypeSelectionActionPerformed(evt);
-            }
-        });
+		jCBoxTypeSelection.addActionListener(this::jCBoxTypeSelectionActionPerformed);
 		
-		jComboBoxType[0].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jComboBoxTypeFromActionPerformed(evt);
-            }
-        });
+		jComboBoxType[0].addActionListener(this::jComboBoxTypeFromActionPerformed);
 		
-		jComboBoxType[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	jComboBoxTypeToActionPerformed(evt);
-            }
-        });
+		jComboBoxType[1].addActionListener(this::jComboBoxTypeToActionPerformed);
 		
-		jButtonConvert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	buttonPressed=true;
-            	jButtonConvertActionPerformed();
-            	buttonPressed=false;
-            }
-        });
+		jButtonConvert.addActionListener(evt -> {
+			buttonPressed=true;
+			jButtonConvertActionPerformed();
+			buttonPressed=false;
+		});
 		jButtonConvert.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).
 	    	put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "ENTER_pressed");
 		jButtonConvert.getActionMap().put("ENTER_pressed", new AbstractAction() {
@@ -170,6 +137,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 		SelectedIndex=jCBoxTypeSelection.getSelectedIndex()+1;
 		
 		if(SelectedIndex==1){
+			valuesEnum = UnitConverterOperation.Length.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Angstrom", "Nanometer", "Micron", 
 					"Millimeter", "Centimeter", "Meter", "KiloMeter", "Inch", "Feet", "Yard", "Nautical Mile", "Mile",
@@ -179,6 +147,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Rod"}));
 			
 		}else if(SelectedIndex==2){
+			valuesEnum = UnitConverterOperation.Weight.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Milligram", "Gram", "Kilogram",
 					"Tonne", "Ounce", "Pound", "Carat"}));
@@ -186,6 +155,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Tonne", "Ounce", "Pound", "Carat"}));
 			
 		}else if(SelectedIndex==3){
+			valuesEnum = UnitConverterOperation.Temperature.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Celsius", "Fahrenheit", "Kelvin"}));
 			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[] {"Celsius", "Fahrenheit", "Kelvin"}));
@@ -200,6 +170,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Bigha", "Satak", "Acre"}));
 			
 		}else if(SelectedIndex==5){
+			valuesEnum = UnitConverterOperation.Volume.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Cubic Centimeter", "Cubic Meter",
 					"Cubic Inch", "Cubic Feet", "Cubic Yard", "Liter", "Gallon(UK)", "Gallon(US)"}));
@@ -207,6 +178,7 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Cubic Inch", "Cubic Feet", "Cubic Yard", "Liter", "Gallon(UK)", "Gallon(US)"}));
 			
 		}else if(SelectedIndex==6){
+			valuesEnum = UnitConverterOperation.Time.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Nanosecond", "Millisecond", 
 					"Second", "Minute", "Hour", "Day" , "Week"}));
@@ -214,13 +186,16 @@ public class UnitConverter extends UltimateCalculatorFrame{
 					"Second", "Minute", "Hour", "Day" , "Week"}));
 			
 		}else if(SelectedIndex==7){
+			valuesEnum = UnitConverterOperation.Energy.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Joule", "Kilojoule",
 					"Calorie", "Kilocalorie", "Electron-Volts", "Foot-Pound"}));
-			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[] {"Joule", "Kilojoule",
+			jComboBoxType[1].setModel(new DefaultComboBoxModel(new String[]{"Joule", "Kilojoule",
 					"Calorie", "Kilocalorie", "Electron-Volts", "Foot-Pound"}));
-			
+
+
 		}else if(SelectedIndex==8){
+			valuesEnum = UnitConverterOperation.Power.values();
 			//Setting types
 			jComboBoxType[0].setModel(new DefaultComboBoxModel(new String[] {"Watt", "Kilowatt",
 					"Horsepower" }));
@@ -251,49 +226,17 @@ public class UnitConverter extends UltimateCalculatorFrame{
 	private void jButtonConvertActionPerformed(){
 		try{
 			double input=Double.parseDouble(jTFieldIO[0].getText());
-			double output=0.0;
-			
-			if(SelectedIndex==1){
-				output = unitConvOperLength.Length(from, to, input);
-			}else if(SelectedIndex==2){
-				output = unitConvOperWeight.Weight(from, to, input);
-			}else if(SelectedIndex==3){
-				output = unitConvOperTemperature.Temperature(from, to, input);
-			}else if(SelectedIndex==4){
-				output = unitConvOperArea.Area(from, to, input);
-			}else if(SelectedIndex==5){
-				output = unitConvOperVolume.Volume(from, to, input);
-			}else if(SelectedIndex==6){
-				output = unitConvOperTime.Time(from, to, input);
-			}else if(SelectedIndex==7){
-				output = unitConvOperEnergy.Energy(from, to, input);
-			}else if(SelectedIndex==8){
-				output = unitConvOperPower.Power(from, to, input);
-			}
-			
+			double output=UnitConverterOperation.Convert(valuesEnum[from-1], valuesEnum[to-1], input);
+
 			jTFieldIO[1].setText(output+"");
 		}catch(NumberFormatException e){
 			if(buttonPressed) new Message("Math Error!\n   Please input correctly.", 420);
 			else jTFieldIO[1].setText("");
 		}
 	}
-	// End of Action Events 																	#_______AE_______#
-
-	//**
-	// Auxiliary Methods 																		#*******AM*******#
-	//**
-
-	// End of Auxiliary Methods 																#_______AM_______#
-	
-	//**
-	// Unimplemented Methods 																	#*******UM*******#
-	//**
-	
-	// End of Unimplemented Methods 															#_______UM_______#
-	
 	
 	/********* Main Method *********/
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		/*// Set the NIMBUS look and feel //*/
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
