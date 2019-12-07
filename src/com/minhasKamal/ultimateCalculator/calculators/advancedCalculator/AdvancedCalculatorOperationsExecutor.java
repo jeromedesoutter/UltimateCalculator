@@ -45,8 +45,9 @@ public class AdvancedCalculatorOperationsExecutor {
 			 **/
 			int index =0;
 			while (!operator.empty()){
+				
 				// if operand
-				if(elements.get(index).isOperator()){
+				if(!elements.get(index).isOperator()){
 					operand.push(elements.get(index).getString());
 				}
 				// if operator
@@ -76,7 +77,7 @@ public class AdvancedCalculatorOperationsExecutor {
 				result = "";
 				new Message("Wrong input!", 420);
 			}
-		} catch (Exception e) {
+		} catch (EmptyStackException e) {
 			new Message("Math Error!\n   Invalid input!", 420);
 		}
 
